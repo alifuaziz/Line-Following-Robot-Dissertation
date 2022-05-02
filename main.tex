@@ -1,19 +1,47 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
-\usepackage{algorithm}
+\usepackage{algorithm,algorithmic}
 \usepackage{algpseudocode}
+\usepackage{appendix}
+\usepackage[margin=1.25in]{geometry} % Size of margin
+\usepackage{hyperref} % Hyperlinks
+\usepackage{tcolorbox} % Highlighting important concepts
+\usepackage{setspace}
 
-\title{Dissertation}
-\author{Alif U Aziz}
-\date{February 2022}
+\usepackage{helvet} % Default Font
+\renewcommand{\familydefault}{\sfdefault}
+
+% WORD COUNT COMMANDS
+\usepackage{verbatim}
+
+\newcommand{\detailtexcount}[1]{%
+  \immediate\write18{texcount -merge -sum -q #1.tex output.bbl > #1.wcdetail }%
+  \verbatiminput{#1.wcdetail}%
+}
+
+\newcommand{\quickwordcount}[1]{%
+  \immediate\write18{texcount -1 -sum -merge -q #1.tex output.bbl > #1-words.sum }%
+  \input{#1-words.sum} words%
+}
+
+\newcommand{\quickcharcount}[1]{%
+  \immediate\write18{texcount -1 -sum -merge -char -q #1.tex output.bbl > #1-chars.sum }%
+  \input{#1-chars.sum} characters (not including spaces)%
+}
+% END OF WORD COUNT COMMANDS
 
 \begin{document}
 
+% Double Line Spacing
+\doublespacing
+
+
+%TC:ignore
 %Title Page
 \begin{titlepage}
    \begin{center}
-       \vspace*{1cm}
+       \vspace*{0.5cm}
     \large
        \textbf{Development of a spatial navigation task using line-following robots}
 
@@ -22,29 +50,35 @@
             
        \vspace{1.5cm}
 
-       \textbf{Alif U Aziz}
-
+       \textbf{Alif Ul Aziz} \\
+       Word Count: 4547/3500
        \vfill
             
-       A thesis presented for the degree of\\
-       Intercalated Bachelor of Science
+       A dissertation presented for the degree of\\
+       Intercalated Bachelor of Science Medical Sciences with Mathematics, Computers and Medicine
             
        \vspace{0.8cm}
      
        \includegraphics[width=0.3\textwidth]{images/ucl_logo.png}
     
         \vspace{1 cm}
-       BSc (Intercal) Medical Sciences with Mathematics, Computers and Medicine \\
-       University College London Medical School\\
+       University College London Medical School \\ \& Sainsbury Welcome Centre\\
        United Kingdom\\
        April 2022
             
    \end{center}
 \end{titlepage}
 
+% WORDCOUNT DATA
+
+% \quickwordcount{main}
+% \quickcharcount{main}
+% \detailtexcount{main}
+
 %Contents
 \tableofcontents
 \pagebreak
+%TC:endignore
 
 %Introduction
 \include{sections/Introduction}
@@ -54,7 +88,7 @@
 \include{sections/Methods}
 \pagebreak
 
-%Implementation
+%Implementation 2033 words
 \include{sections/Implementation}
 \pagebreak
 %Results
@@ -66,6 +100,8 @@
 \include{sections/Discussion}
 \pagebreak
 
+
+%TC:ignore
 % Biblography
 \section*{Bibliography}
 \bibliographystyle{apalike} 
@@ -74,4 +110,7 @@
 %Appendix
 \pagebreak
 \include{sections/Appendix}
+%TC:endignore
+
+
 \end{document}

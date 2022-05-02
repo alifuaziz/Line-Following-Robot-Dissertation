@@ -1,13 +1,102 @@
 \section{Discussion and Further Work}
 
-Because of the structure of the code (the object oriented structure to the code), it will be easier to modify and reuse to code to add features that are required in the further development of the honeycomb maze. 
-When there is sufficient evidence that further types of investigation setups are required (such as platforms which move), these features can easily be added to the program. This is because it has been written in a modular and readable was according to the 'SOLID' framework for writing object oriented programs.
+\paragraph{Summary of Results}
 
-\\
-Examples of further features that could be added are as follows:
+The program is able to perform the task required by the design brief (see section \ref{section:design_brief})
 
-\begin{enumerate}
-    \item Better integration with DLC (probably)
-    \item More support for the target platform moving around 
-    \item More robust 'first step' of the path finding algorithm as an exhaustive search of the different combinations are the only reason I know that there won't be a problem for the number of robots that there are on the 
-\end{enumerate}
+\paragraph{Impact of the program}
+
+Since this program is written in python, it allows easy integration with computer vision software such as \textit{deeplabcut} \cite{dlc}. This would allow the maze interaction to be automated.
+
+A functioning version of this program has been uploaded to \href{https://github.com/casualcoffeeaddict/Honeycomb-Maze}{GitHub}. This means that for relatively little financial cost to the investigator, it would be possible for tool to be developed in many neuroscience laboratories investigating animal models of spatial cognition. This would be mean that it could be used more widely than just very well funded laboratories.
+This would allow this tool to be used more widely in laboratories investigating spatial memory.  
+
+\paragraph{Object oriented structure and expansion}
+
+Because of the structure of the object oritented struture of the code (the object oriented structure to the code), it will be easier to modify and reuse to code to add features that are required in the further development of the honeycomb maze. 
+
+An example of this could include a more efficient algorithm for setting the path-finding targets, which could easily be added to the program as the structure for setting path finding targets already exists.
+
+New features can easily be added to the program. This is because it has been written in a modular and readable was according to the 'SOLID' framework for writing object oriented programs \cite{SOLID_book}.
+
+
+
+\paragraph{Hard-coded steps in the implementation} In the overall algorithm, there were steps that were manually coded in that the robots must always perform under this version of the algorithm. These steps were namely the 'stepping back from the non animal robot' and 'stepping into the outer ring of the animal robot' in the start of the algorithm and the 'step into inner ring' at the end of the algorithm.
+
+Due to the presence of these steps, the algorithm is not completely general, where for an increased number of platforms in the maze, the algorithm will still work. 
+
+This is an area of improvement for the work, where the implementation for three moving platforms, for example, could be achieved.
+
+Despite this, the algorithm in its current state is able to handle all the cases of movement that are required of it (except in cases where the animal robot is close to the corner of the area of the maze).
+
+\paragraph{Function for deciding order of operations}
+
+For a three agent system, it is possible to exhaustively manually search through the possible arrangement of the robots and hence workout the correct order of operations. However, in the case where there are most that three robots in the system, it could not be obvious what the correct order would be. It would be possible to write a function that calculates the correct order of operations for any number (and any position) of robots. This, however, would be a challenging task.
+
+\paragraph{Assignment of Path-finding Targets}
+
+For the development of a more efficient path-finding algorithm, that will have less steps between for the robots to take (on average), requires a more complex layer of logic that should be added to the program.
+
+This would require the computation of all the possible targets from all the sources for each robot. From this the setting of path-finding targets so that average number of steps for each robot is as close to the mean of the selected choices. This would set the values so there are not extreme values for the path-finding (hence one robot does not have a very large number of steps to make compared with a very small number of steps to take for another robot so the the time for which any robot in the system remains still is reduced, so the robot time is not wasted waiting for other robots to move to their - far-away - targets.
+
+
+
+
+
+% The steps required to do this would take the following algorithm:
+% \label{function:move_around_hex_grid}
+% \begin{algorithm}
+% \caption{Better function for setting path-finding targets}
+%  \begin{algorithmic}
+%  \REQUIRE Robot List 
+%     \FOR{Each Robot}
+%         \FOR{Each Path-finding Target}
+%             \STATE Find length of path
+%             \STATE Add this the corresponding position in a matrix of path-length and robot
+%         \ENDFOR
+%     \ENDFOR
+    
+%     \FOR{Each Column in the matrix}
+%         \STATE Find the average value for each of the columns
+%         \STATE Find the variance of the columns
+        
+%     \ENDFOR
+    
+%     Return the column
+
+%  \end{algorithmic}
+% \end{algorithm}
+
+
+
+\paragraph{Multi-Agent Path Finding (MAPF) Algorithms } 
+
+The implementation of path-finding for both of the robots at once would be a way of increasing the speed of the algorithm as it would be able to compute paths for the both of the robots, from their path-finding source to goal at once. This would allow the execution of the commands to happen at once, reducing the time between animal decisions.
+
+This is an area of research which has growing interest due to its use in multi-robot systems such as robotics-run run warehouses. There are implementations of this which are centralised such as the A* algorithm multi-agent systems \cite{DBLP:journals/corr/abs-2103-09979} or decentralised ways of organising behaviour such as the use of 'virtual pheromones' \cite{multi_agent_pathfinding_review} to communicate to many agents at once. 
+
+The computational time required compute the best path, for the A* algorithm, can take significant computational run time ($\mathcal{O}(n \cdot log(n)$) as you increase the number of robots in the system
+
+These are useful generalisations of path-finding algorithms for many agents, however for Honeycomb Maze an inefficient algorithm could be implemented without this being the limiting factor in the speed of the algorithm due to the low number of agents in the system.
+
+If this was successfully implemented it would be possible to execute the commands for both the robots at once, allowing for a faster running algorithm.
+
+
+\paragraph{Integration Testing}
+
+As there are many parts to the logic of this program that interact with each other in complex ways, example scripts were written of the program working in different starting positions. This allows an integration test of all the different components of the code are working together in the correct way for many different configurations that the program could be presented with. This makes sure the program is written in a robust way.
+
+
+
+
+
+placing the work in context 
+
+Comparison of similar problems and their solution and how they are different to yours
+
+
+
+Intro:500
+Implementation:2250
+Results:
+Discussion:900
