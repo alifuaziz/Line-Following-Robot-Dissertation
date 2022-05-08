@@ -15,7 +15,7 @@
 \section{Supplementary Material: Figures}
 The source code for the dynamic honeycomb maze is linked in a  \href{https://github.com/casualcoffeeaddict/Honeycomb-Maze}{\textit{github} repository},\\ at \href{https://github.com/casualcoffeeaddict/Honeycomb-Maze}{https://github.com/casualcoffeeaddict/Honeycomb-Maze}
 
-This package was developed in \textit{python} version 3.9.0 \cite{python3}, with integration from \cite{networkx}.
+This package was developed in \textit{Python} version 3.9.0 \cite{python3}, with integration from \textit{networkx} version 2.8 \cite{networkx}.
 
 \subsection{Network of Integration}
 \label{fig:integration_network}
@@ -35,19 +35,19 @@ This package was developed in \textit{python} version 3.9.0 \cite{python3}, with
 
 \end{figure}
 
-\subsection{Truth Table for changing relative position}
-\label{table:relative_position_truth_table}
+% \subsection{Truth Table for changing relative position}
+% \label{table:relative_position_truth_table}
 
-\begin{tabular}{|c||c|c|c|}
-    % \centering
-    \hline
-    \multicolumn{4}{|c|}{Relative Position Truth Table} \\
-    \hline
-    Axis that is constant & x-axis & y-axis & z-axis \\
-    \hline
-    Relative Position    & 0 \&  3 & 1 \& 4 & 2 \& 5 \\
-    \hline
-\end{tabular}
+% \begin{tabular}{|c||c|c|c|}
+%     % \centering
+%     \hline
+%     \multicolumn{4}{|c|}{Relative Position Truth Table} \\
+%     \hline
+%     Axis that is constant & x-axis & y-axis & z-axis \\
+%     \hline
+%     Relative Position    & 0 \&  3 & 1 \& 4 & 2 \& 5 \\
+%     \hline
+% \end{tabular}
 
 
 \begin{figure}[H]
@@ -88,8 +88,9 @@ False & False & NNAR\\
 \label{fig:example_path}
 \begin{figure}[H]
     \centering
-    \includegraphics[scale = 0.7]{images/example_path.png}
-    \caption{The figure shows the path that the platforms would take around the hexagonal grid.}
+    \includegraphics[scale=0.4]{images/overview_of_algorithm.png}
+    \caption{This shows an example of the overall movement that would occur when moving the robot around}
+    \label{fig:overview_of_algorithm}
 \end{figure}
 
 
@@ -98,33 +99,15 @@ False & False & NNAR\\
 \label{fig:collision}
 \begin{figure}[H]
     \centering
-    \includegraphics[scale = 0.5]{images/consec_hex_collision .png}
-    \caption{This figure shows how two consecutive hexagonal robot are unable to rotate next to each other. The rotating robot (blue) will collide with the stationary one (green)}
+    % \includegraphics[scale = 0.5]{images/consec_hex_collision .png}
+    % \includegraphics[scale = 0.25]{images/direct_inner_movement.png}
+    \includegraphics[scale= 0.8]{images/collisions.png}
+    \caption{The \textbf{LHS} figure shows how two consecutive hexagonal robot are unable to rotate next to each other. The rotating robot (blue) will collide with the stationary one (green). The \textbf{RHS} shows that direct movement (of the orange robot) to another position in the inner ring is impossible as the platforms will collide.}
 
 \end{figure}
 
 \newpage
 \section{Supplementary Material: Functions}
-
-\subsection{Move to Inner Ring}
-\label{function:move to inner ring}
-\begin{algorithm}
-\caption{Implementation of moving the robot to the inner ring}
- \begin{algorithmic}
-\REQUIRE Relative Position between \textit{Animal Robot} \AND \textit{Moving Robot}. This will be a number between 0-5, depending on its position around the animal 
-\REQUIRE \textit{Inner Ring Steps} List: [-1, -1, -1, 1, 1, 1]
-\REQUIRE \textit{Ring Dimension} List: ['x', 'y', 'z', 'x', 'y', 'z']
-
-\STATE $rel pos \leftarrow relative position(\textit{moving_robot})$
-
-\STATE 
-
-
-    
-
-
- \end{algorithmic}
-\end{algorithm}
 
 \subsection{Basic moves around the coordinate system}
 \label{function:move_around_hex_grid}
@@ -133,20 +116,82 @@ False & False & NNAR\\
  \begin{algorithmic}
  \REQUIRE 'axis' \AND 'step'
    \IF{'axis' is 'x'}
-        \STATE$y = y + step$
-        \STATE$z = z - step$
+        \STATE$y \leftarrow y + step$
+        \STATE$z \leftarrow z - step$
         \RETURN $[x, y, z]$
   \ELSIF{'axis' is 'y'}
-        \STATE$y = x + step$
-        \STATE$z = z - step$
+        \STATE$y \leftarrow x + step$
+        \STATE$z \leftarrow z - step$
         \RETURN $[x, y, z]$
   \ELSIF{'axis' is 'z'}
-        \STATE$y = x + step$
-        \STATE$z = y - step$
+        \STATE$y \leftarrow x + step$
+        \STATE$z \leftarrow y - step$
         \RETURN $[x, y, z]$
    \ENDIF
- \end{algorithmic}
+   
+\end{algorithmic}
 \end{algorithm}
+
+\subsection{Move to Inner Ring}
+\label{function:move to inner ring}
+\begin{algorithm}
+\caption{Implementation of moving the robot to the inner ring}
+ \begin{algorithmic}
+
+\REQUIRE Relative Position between \textit{Animal Robot} \AND \textit{Moving Robot}. This will be a number between 0-5, depending on its position around the animal 
+\REQUIRE \textit{Inner Ring Steps} List: [-1, -1, -1, 1, 1, 1]
+\REQUIRE \textit{Ring Dimension} List: ['x', 'y', 'z', 'x', 'y', 'z']
+
+\STATE rel pos $\leftarrow$ relative position(\textit{$moving\_robot$})
+
+
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Get Inner ring coordinates}
+\label{function:def_inner_ring}
+\begin{algorithm}[H]
+\caption{Returns the list of coordinates that are consecutive to the position vector}
+\begin{algorithmic}
+
+\REQUIRE Position Vector
+
+inner ring list = [[1, 0, -1], [1, -1, 0], [0, -1, 1],[-1, 0, +1], [-1, 1, 0], [0, 1, -1]]
+\FOR{each coordinate in inner ring list}
+\STATE new coordinate $\leftarrow$ coordinate + position vector
+\STATE append new coordinate to new inner ring list
+
+\ENDFOR
+\RETURN new inner ring list
+
+
+\end{algorithmic}
+\end{algorithm}
+
+
+\subsection{Get Outer ring coordinates}
+\label{function:def_outer_ring}
+\begin{algorithm}[H]
+\caption{Returns the list of coordinates that are two moves away from the position vector}
+\begin{algorithmic}
+
+\REQUIRE Position Vector
+
+outer ring = [[2, 0, -2], [2, -1, -1], [2, -2, 0], [1, -2, 1], [0, -2, 2], [-1, -1, 2], [-2, 0, 2], [-2, 1, 1], [-2, 2, 0], [-1, 2, -1], [0, 2, -2], [1, 1, -2]] 
+\FOR{each coordinate in inner ring list}
+\STATE new coordinate $\leftarrow$ coordinate + position vector
+\STATE append new coordinate to new outer ring list
+
+\ENDFOR
+\RETURN new outer ring list
+
+
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
 
 \subsection{Finding relative position}
 \label{function:def_relative_position}
@@ -171,6 +216,7 @@ False & False & NNAR\\
 \ELSIF{$z = 0$ \AND $y > 0$}
     \RETURN $5$  
 \ENDIF
+
  \end{algorithmic}
 \end{algorithm}
 
@@ -181,23 +227,23 @@ False & False & NNAR\\
 \function{Reassign robot class}\Comment{Where AR = Animal Robot, NAR = Non-Animal Robot, NNAR = Non-Non-Animal Robot \& State = State of the animal robot}
 \begin{algorithmic}
 \REQUIRE \textit{New Animal Robot} Class, \textit{Current Robot} Class
-
+\STATE    
 \FOR{Each \textit{Robot} in the Maze}
-\IF {\textit{Robot} Class is \textit{New Animal} Class \AND the \textit{Robot} Class is \textit{New Animal} Class}
-    \STATE \textit{Robot} Class is Animal Robot
-\ELSIF {\textit{Robot} Class is \textit{New Animal} Class \AND the \textit{Robot} Class is \textit{New Animal} Class}
-    \STATE \textit{Robot} Class is Animal Robot
-    
-    
-\ELSIF {\textit{Robot} Class is \textit{New Non-Animal} Class \AND the \textit{Robot} Class is \textit{New Non-Animal} Class}
-    \STATE \textit{Robot} Class is Animal Robot
-\ELSIF {\textit{Robot} Class is \textit{New Animal} Class \AND the \textit{Robot} Class is \textit{New Animal} Class}
-    \STATE \textit{Robot} Class is Animal Robot
-    
-\ELSIF {\textit{Robot} Class is \textit{New Non-Non-Animal} Class \AND the \textit{Robot} Class is \textit{New Animal} Class}
-    \STATE \textit{Robot} Class is Animal Robot
-\ELSIF {\textit{Robot} Class is \textit{New Non-Non-Animal} Class \AND the \textit{Robot} Class is \textit{New Animal} Class}
-    \STATE \textit{Robot} Class is Animal Robot
+\STATEtunr
+\IF {\textit{Robot} Class is \textit{AR} Class \AND the \textit{Robot} Class is \textit{AR} Class}
+    \STATE \textit{Robot} Class $\leftarrow$ AR
+\ELSIF {\textit{Robot} Class is \textit{New Animal} Class \AND the \textit{Robot} Class is \textit{AR} Class}
+    \STATE \textit{Robot} Class $\leftarrow$ NAR
+\STATE    
+\ELSIF {\textit{Robot} Class is \textit{New NAR} Class \AND the \textit{Robot} Class is \textit{New NAR} Class}
+    \STATE \textit{Robot} Class $\leftarrow$ AR
+\ELSIF {\textit{Robot} Class is \textit{New AR} Class \AND the \textit{Robot} Class is \textit{New AR} Class}
+    \STATE \textit{Robot} Class $\leftarrow$ AR
+\STATE    
+\ELSIF {\textit{Robot} Class is \textit{New NNAR} Class \AND the \textit{Robot} Class is \textit{New AR} Class}
+    \STATE \textit{Robot} Class $\leftarrow$ AR
+\ELSIF {\textit{Robot} Class is \textit{New NNAR} Class \AND the \textit{Robot} Class is \textit{New AR} Class}
+    \STATE \textit{Robot} Class $\leftarrow$ NNAR
     
     
 \ENDIF
@@ -227,7 +273,9 @@ False & False & NNAR\\
         \COMMENT{Interprets the number of moves forwards the robot makes}
         \STATE Moves $command$ number of steps forward
 \ENDIF
-\ENDFOR
+\ENDFOR{}
+
+
 \end{algorithmic}
 \end{algorithm}
 
@@ -300,48 +348,87 @@ This function makes commands in the format 'number of turns', 'number of steps',
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Get Inner ring coordinates}
-\label{function:def_inner_ring}
+
+\subsection{Instantiating of Environment}
+\label{function:instantiation}
 \begin{algorithm}[H]
-\caption{Returns the list of coordinates that are consecutive to the position vector}
-\begin{algorithmic}
+\caption{The instantiating of the environment}
 
-\REQUIRE Position Vector
+\textbf{Instantiate Maze}
 
-inner ring list = [[1, 0, -1], [1, -1, 0], [0, -1, 1],[-1, 0, +1], [-1, 1, 0], [0, 1, -1]]
-\FOR{each coordinate in inner ring list}
-\STATE new coordinate $\leftarrow$ coordinate + position vector
-\STATE append new coordinate to new inner ring list
+\begin{algorithmic}[1]
+% \textbf{Instantiate Environment}
 
-\ENDFOR
-\RETURN new inner ring list
+\bindent{}
+\STATE maze = HexagonMaze($rows$, $columns$, $*name$)
+\eindent{}
+\\ \textbf{Instantiate Robots}
+\bindent{}
+\STATE robot1 = PlatformRobot($x$, $y$, $z$, $direction$, $ip\_address$, $concect$, $*name$)
+\STATE robot2 = PlatformRobot($x$, $y$, $z$, $direction$, $ip\_address$, $concect$, $*name$)
+\STATE robot3 = PlatformRobot($x$, $y$, $z$, $direction$, $ip\_address$, $concect$, $*name$)
+\eindent{}
+
+\\ \textbf{Instantiate Animal}
+\bindent{}
+\STATE animal = Animal($name\_of\_maze$, $*name$)
+\eindent{}
+\\ \textbf{Point Objects at each-other}
+\\ \textit{Robots}
+\bindent{}
+\STATE robot1.set\_maze($name\_of\_maze$)
+\STATE robot2.set\_maze($name\_of\_maze$)
+\STATE robot3.set\_maze($name\_of\_maze$)
+\eindent{}
+\\ \textit{Animals}
+\bindent{}
+\STATE animal.set\_maze($name\_of\_maze$)
+\eindent{}
+
+\\ \textbf{Set the animal robot}
+\bindent{}
+\STATE robot1.set\_animal\_robot($True$) \algorithmiccomment{robot1 is set to AR}
+\eindent{}
+
 \end{algorithmic}
 \end{algorithm}
 
+% \subsection{Maze Loop}
+% \label{function:maze_loop}
+% \begin{algorithm}[H]
+% \caption{The sequence of steps that are required for the whole procedure}
 
-\subsection{Get Outer ring coordinates}
-\label{function:def_outer_ring}
-\begin{algorithm}[H]
-\caption{Returns the list of coordinates that are two moves away from the position vector}
-\begin{algorithmic}
+% \begin{algorithmic}[1]
+% \STATE \textbf{Let the animal make the choice. Then let the maze change the States of the robots} 
+% \bindent{}
+%     \STATE Animal makes choice
+% 	\STATE Change the class of all the robots based on this choice
+% 	\STATE Set the position of the animal on top of animal choice
+% \eindent{}
+% \\ \textbf{Find the pathfinding targets before movement occurs}
+% \bindent{}
+% 	\STATE Get the NNAR class
+% 	\STATE Get the NAR class
+% 	\STATE Set the pathfinding targets of NNAR
+% 	\STATE Set the pathfinding target of NAR
+% \eindent{}
+% \\ \textbf{Execute pathfinding for robots}
+% \bindent{}
+% 	\STATE NNAR step back fron NAR
+% 	\STATE and pathfinding to pathfinding target
+% 	\STATE NAR step back from AR
+% 	\STATE and pathfindin got pathfinding target
+% \eindent{}
+% \\ \textbf{Move robots into the inner ring}
+% \bindent{}
+% 	\STATE 13. NAR and NNAR step into inner ring
+% \eindent{}
 
-\REQUIRE Position Vector
 
-outer ring = [[2, 0, -2], [2, -1, -1],
-                      [2, -2, 0], [1, -2, 1],
-                      [0, -2, 2], [-1, -1, 2],
-                      [-2, 0, 2], [-2, 1, 1],
-                      [-2, 2, 0], [-1, 2, -1],
-                      [0, 2, -2], [1, 1, -2]]
-\FOR{each coordinate in inner ring list}
-\STATE new coordinate $\leftarrow$ coordinate + position vector
-\STATE append new coordinate to new outer ring list
+% \end{algorithmic}
+% \end{algorithm}
 
-\ENDFOR
-\RETURN new outer ring list
-\end{algorithmic}
-\end{algorithm}
-
+% Note: The maze loop is repeated until the animal reaches the goal
 
 
 
