@@ -1,19 +1,32 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
-\usepackage{algorithm,algorithmic}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+% \usepackage{algcompatible}
+
 \usepackage{algpseudocode}
 \usepackage{appendix}
 \usepackage[margin=1.25in]{geometry} % Size of margin
 \usepackage{hyperref} % Hyperlinks
 \usepackage{tcolorbox} % Highlighting important concepts
 \usepackage{setspace}
-
-\usepackage{helvet} % Default Font
-\renewcommand{\familydefault}{\sfdefault}
-
+% Font Selection
+\usepackage{fontspec}
+\setmainfont{Arial}
+% Bibliography
+% \usepackage[
+% backend=biber,
+% style=alphabetic,
+% ]{biblatex}
+% \title{A bibLaTeX example}
+% \addbibresource{bibliography.bib} %Imports bibliography file
 % WORD COUNT COMMANDS
 \usepackage{verbatim}
+\usepackage{pdflscape}
+% Font Size
+\documentclass[10pt]{book}
+
 
 \newcommand{\detailtexcount}[1]{%
   \immediate\write18{texcount -merge -sum -q #1.tex output.bbl > #1.wcdetail }%
@@ -31,11 +44,22 @@
 }
 % END OF WORD COUNT COMMANDS
 
+% Defining Function for indenting formatting of functions
+\newlength\myindent
+\setlength\myindent{2em}
+\newcommand\bindent{%
+  \begingroup
+  \setlength{\itemindent}{\myindent}
+  \addtolength{\algorithmicindent}{\myindent}
+}
+\newcommand\eindent{\endgroup}
+% End of definitions
+
+
 \begin{document}
 
 % Double Line Spacing
 \doublespacing
-
 
 %TC:ignore
 %Title Page
@@ -51,7 +75,7 @@
        \vspace{1.5cm}
 
        \textbf{Alif Ul Aziz} \\
-       Word Count: 4547/3500
+       Word Count: 3455
        \vfill
             
        A dissertation presented for the degree of\\
@@ -62,7 +86,7 @@
        \includegraphics[width=0.3\textwidth]{images/ucl_logo.png}
     
         \vspace{1 cm}
-       University College London Medical School \\ \& Sainsbury Welcome Centre\\
+       University College London Medical School \\ \& Sainsbury Wellcome Centre\\
        United Kingdom\\
        April 2022
             
@@ -74,6 +98,10 @@
 % \quickwordcount{main}
 % \quickcharcount{main}
 % \detailtexcount{main}
+
+% Abstract
+\include{sections/Abstract}
+\pagebreak
 
 %Contents
 \tableofcontents
@@ -88,7 +116,7 @@
 \include{sections/Methods}
 \pagebreak
 
-%Implementation 2033 words
+%Implementation
 \include{sections/Implementation}
 \pagebreak
 %Results
