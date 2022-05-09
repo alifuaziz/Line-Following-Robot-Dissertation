@@ -56,10 +56,11 @@ The program has been written in Python 3. Following the animals movement, the pr
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale = 0.5]{images/khepera_IV_robot.png}
+    \includegraphics[scale = 0.5]{images/kiv_view.png}
     \caption{Shown is the underneath of the \textit{Khepera IV} robot. Note the presence of the 2 parallel wheels of the robot. 
     Whenever the platform robot wants to move to the out of its current direction of travel, it must first rotate to its desired direction of travel and then translate forwards.
-    This leads to significant movement limitations of the \textit{Khepera IV} robots which must be addressed in the development of the program to control the Dynamic Honeycomb Maze. \\ \\
+    This leads to significant movement limitations of the \textit{Khepera IV} robots which must be addressed in the development of the program to control the Dynamic Honeycomb Maze.
+    The presence of the IR sensor \textit{only} on the front of the robot requires a specific function for any movements backwards as the IR sensor is only on the front. (See Function \ref{function:stepback_function} and Figure \ref{fig:stepping_back_method} to see more details)
     }
     \label{fig:robot}
 \end{figure}

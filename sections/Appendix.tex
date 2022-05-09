@@ -13,8 +13,10 @@
 
 \appendix
 \section{Supplementary Material: Figures}
-The source code for the dynamic honeycomb maze is linked in a  \href{https://github.com/casualcoffeeaddict/Honeycomb-Maze}{\textit{github} repository},\\ at \href{https://github.com/casualcoffeeaddict/Honeycomb-Maze}{https://github.com/casualcoffeeaddict/Honeycomb-Maze}
-
+The source code for the dynamic honeycomb maze is linked in a  \href{https://github.com/casualcoffeeaddict/Honeycomb-Maze}{\textit{github} repository}, or type \\ at \href{https://github.com/casualcoffeeaddict/Honeycomb-Maze}{https://github.com/casualcoffeeaddict/Honeycomb-Maze} or type 
+\begin{verbatim}
+    pip install honeycomb-maze
+\end{verbatim}
 This package was developed in \textit{Python} version 3.9.0 \cite{python3}, with integration from \textit{networkx} version 2.8 \cite{networkx}.
 
 \subsection{Network of Integration}
@@ -93,7 +95,15 @@ False & False & NNAR\\
     \label{fig:overview_of_algorithm}
 \end{figure}
 
-
+\subsection{Stepping Back Method}
+\label{fig:stepping_back_method}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{images/stepback_method.png}
+    \caption{The steps required for the 'stepping back' method. This is required because the IR sensors (which keep track of the number of translations and rotations) are only on the front of the robot. This means the robot is only able to keep track of the how far it has stepped back by .
+    \\ This custom method simply requires the encoded direction of the robot to be reflected every time this method is run (Shown in Function \ref{function:stepback_function}).
+    }
+\end{figure}
 
 \subsection{Example of consecutive hexagonal platforms colliding}
 \label{fig:collision}
@@ -189,7 +199,31 @@ outer ring = [[2, 0, -2], [2, -1, -1], [2, -2, 0], [1, -2, 1], [0, -2, 2], [-1, 
 \end{algorithmic}
 \end{algorithm}
 
+\subsection{Step Backwards Command}
+\label{function:stepback_function}
+This function allows the robot to be able to step back whilst keeping track of its position on the light position on the hexagonal grid.
+It requires the following: The position vector to be updated as required \textit{and} the direction of the robot to be updated so that it is facing the opposite direction to its original direction.
+\begin{algorithm}[H]
+\caption{Method for stepping back from another robot that it is consecutive to.}
+\begin{algorithmic}
 
+\REQUIRE Robot direction
+\STATE \textbf{Run code to change direction (updates position vector)}
+\bindent{}
+\STATE Execute $step-back$ command
+\eindent{}
+\\ \textbf{Encode change in direction (updates direction of robot)}
+\bindent{}
+\STATE robot.direction $\leftarrow$ robot.direction + 3
+\STATE robot.direction $\leftarrow$ robot.direction $modulus$ 6 
+\eindent{}
+\RETURN robot.direction
+
+
+
+
+\end{algorithmic}
+\end{algorithm}
 
 
 

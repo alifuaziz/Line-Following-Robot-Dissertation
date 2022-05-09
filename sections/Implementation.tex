@@ -99,7 +99,7 @@ The order of the overall algorithm requires the following steps:
     \item Deciding the order by which the platforms move so that no collisions take place. (Section \ref{section:order_of_operations})
     \item Movement of the platforms away from the animal robot so it can move freely without collision. (Section \ref{section:pre_pathfinding})
     \item Path-finding around the board to their path-finding targets using the Dijkstra Path-finding Algorithm. (Section \ref{section:pathfinding})
-    \item Moving into the inner ring of the animal robot so that they are in the new positions and they are consecutive to the animal, allowing the animal to make another decision (to choose another platform) around the maze. (Section \ref{section:post_path_finding}
+    \item Moving into the inner ring of the animal robot so that they are in the new positions and they are consecutive to the animal, allowing the animal to make another decision (to choose another platform) around the maze. (Section \ref{section:post_path_finding})
 \end{enumerate}
 \end{tcolorbox}
 %TC:endignore
@@ -108,7 +108,7 @@ The order of the overall algorithm requires the following steps:
 
 \subsubsection{Order of movement of the platforms for the Pre-Path-finding phase}
 \label{section:order_of_operations}
-Here we discuss the order of operations for the two moving robots must take to prevent them colliding with each other. The algorithm must be robust enough such that no collisions occur for all the possible pairs of positions of the non animal robots around the animal robot. 
+Here we discuss the order of operations for the two moving robots must take to prevent them colliding with each other. The algorithm must be robust enough such that no collisions occur for all the possible pairs of positions of the non animal robots around the animal robot. As the IR sensors are only present on the front the robots, a specific method is used to allow the robot to step backwards whilst keeping track of its position (This seen in \ref{fig:stepping_back_method} and implemented with Function \ref{function:stepback_function}).
 
 From Fig \ref{fig:post_decision_states} we see that the platform, which the animal did not choose to move on to, must be the first platform to move backwards away from the robot which used to have the animal on it. If this occurs, the robot is never next to the other two robot meaning it has free range of movement to start the path-finding phase.
 
