@@ -1,6 +1,6 @@
 \section{Results}
 
-Based on the implementation described above the following is the overall algorithm which integrates all of the parts into a single command that represents what would be sent to the robots  
+Based on the implementation described above the following is the overall algorithm which integrates all of the parts into a single command that represents what would be sent to the robots. 
 
 %TC:ignore
 \begin{tcolorbox}
@@ -20,7 +20,7 @@ Based on the implementation described above the following is the overall algorit
 \subsection{Maze Loop}
 \label{function:maze_loop}
 
-After instantiating the environment (See Function \ref{function:instantiation}), the function which implements the logic described in Section \ref{section:implementation} must be executed in the following way:
+After instantiating the environment (See Function \ref{function:instantiation}), the function which implements the logic described in Section \ref{section:implementation} must be executed in the following way. This corresponds to the diagrammatic representation of the algorithm described in Section \ref{fig:control_flow_diagram}. 
 
 
 %TC:ignore
@@ -59,11 +59,12 @@ to	\STATE and path-finding got path-finding target
 \afterpage{
 \begin{landscape}
 \subsection{Control flow diagram of the algorithm}
+\label{fig:control_flow_diagram}
 \begin{figure}[H]
     \centering
     \includegraphics[scale = 0.786]{images/cfdl.png}
     \caption{Control Flow Diagram of algorithm implemented. \textbf{A} shows all possible states of the robot. The animal will decide which one to move to. Before this happens there is no difference between the \textit{NAR} and \textit{NNAR} so they are both coloured light blue. Once the animal has made a decision, the \textit{NAR} (in dark blue), the \textit{AR} (in green) and \textit{NNAR} robots (in light blue) are labeled appropriately. \textbf{C} shows that from all possible arrangements of the platforms, the \textit{NNAR} (light blue), must move backwards so that it does not intersect with the other robots when path-finding begins. \textbf{D} shows the two consecutive platforms, with all possible pairs of directions labeled. From \textbf{E}, it can be seen that for all the possible cases of the blue's orientation compared with the green, the \textit{NAR} must always move to the (orange) \textit{outer ring}. Once \textit{NNAR} and \textit{NAR} have reached the \textit{outer ring}, they must path-find to their path-finding target. \textbf{F} shows how this is achieved: The network of possible moves is generated, the moves that are inaccessible by the moving robot are removed from the network. Then the shortest path from the source to the target are found. \textbf{G} shows the final move required to get from the \textit{outer ring} of the target position to the (required) \textit{inner ring}.}
-    \label{fig:control_flow_diagram}
+
 \end{figure}
 \end{landscape}
 }
