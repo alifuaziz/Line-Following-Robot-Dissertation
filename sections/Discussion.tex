@@ -10,7 +10,7 @@ Using an object oriented approach, the program is able to perform the task requi
 
 Since this program is written in Python, it allows integration with computer vision software such as \textit{deeplabcut} \cite{dlc}, allowing the animal-maze interaction to be automated.
 
-A functioning version of this program has been uploaded to \href{https://github.com/casualcoffeeaddict/Honeycomb-Maze}{GitHub}. This means that for relatively little financial cost, it would be possible for the tool to be developed in many laboratories investigating animal models of spatial cognition. This means it could be used more widely than just well funded laboratories. This tool can be used more widely in laboratories investigating spatial memory.  
+A functioning version of this program has been uploaded to \href{https://github.com/casualcoffeeaddict/Honeycomb-Maze}{GitHub}. This means that for relatively little financial cost, it would be possible for the tool to be adapted in many laboratories investigating different aspects of animal model of spatial cognition. This means it could be used more widely than just well funded laboratories. This tool can be used more widely in laboratories investigating spatial memory.  
 
 \paragraph{Integration Testing}
 
@@ -20,7 +20,7 @@ There are many parts to the logic of this program that interact in complex ways 
 
 \paragraph{How well the algorithm can generalise} In the overall algorithm, the pre- and post- path-finding methods were programmed such that they must always be performed under this version of the algorithm. The order of the of operations for this version of the program is also set hard-coded (i.e. NNAR moves first, NAR moves second). % Generalising this to a larger number of robots would require a function.
 
-Due to these steps, the algorithm is not completely general; for more than three platforms, the algorithm will not work. Despite this, the algorithm is able to handle all the cases of movement that are required (except in cases where the animal robot is close to the corner of the area of the maze).
+Due to these steps, the algorithm is not completely generalised; for more than three platforms, the algorithm will not work. Despite this, the algorithm is able to handle all the cases of movement that are required, except in cases where the animal robot is close to the corner of the area of the maze.
 Because of the object oriented structure of the code \cite{SOLID_book}, it is easy to implement new the features, such as the following, required upon further development. 
 
 \paragraph{Improved path-finding network} Instead of the\textit{ movement network} removing all of the positions from the inner ring of the non-moving robots, it would be possible to add re-introduce the actual source and legal move to the outer ring of the network. This would then reduce the number of hard-coded steps to the final 'move to inner ring', which would be kept in the program to make sure the timing of the final step was the same for both platforms.
@@ -42,7 +42,7 @@ This is an area of research which has growing interest due to its use in multi-r
 
 % The computational time required compute the best path, for the A* algorithm, can take significant computational run time ($\mathcal{O}(n \cdot log(n)$) as you increase the number of robots in the system
 
-These are useful generalisations of path-finding algorithms for many agents, however for Honeycomb Maze an inefficient algorithm is implemented without this being the limiting factor in the speed of the algorithm due to the low number of agents in the system.
+These are useful generalisations of path-finding algorithms for many agents. However for Honeycomb Maze an inefficient algorithm is implemented without it being the limiting factor in the speed of the algorithm due to the low number of agents in the system.
 However, if MAPF was successfully implemented it would be possible to execute the commands for both the robots at once, allowing for a faster running algorithm.
 
 
